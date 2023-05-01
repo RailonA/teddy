@@ -36,47 +36,47 @@ describe('Looping', function () {
     done()
   })
 
-  it.only('should loop through {arrays} correctly (looping/loopArrayOfArrays.html)', function (done) {
+  it('should loop through {arrays} correctly (looping/loopArrayOfArrays.html)', function (done) {
     assert.equalIgnoreSpaces(teddy.render('looping/loopArrayOfArrays.html', model), '<p>0</p><p>a</p><p>b</p><p>c</p><p>1</p><p>d</p><p>e</p><p>f</p><p>2</p><p>g</p><p>h</p><p>i</p>')
     done()
   })
 
-  it.only('should loop through {objects} correctly (looping/loopArrayOfObjects.html)', function (done) {
+  it('should loop through {objects} correctly (looping/loopArrayOfObjects.html)', function (done) {
     assert.equalIgnoreSpaces(teddy.render('looping/loopArrayOfObjects.html', model), '<p>0</p> <p>1</p> <p>2</p> <p>3</p><p>1</p> <p>4</p> <p>5</p> <p>6</p><p>2</p> <p>7</p> <p>8</p> <p>9</p>')
     done()
   })
 
-  it.only('should loop through a {nested.object} correctly (looping/nestedObjectLoop.html)', function (done) {
+  it('should loop through a {nested.object} correctly (looping/nestedObjectLoop.html)', function (done) {
     assert.equalIgnoreSpaces(teddy.render('looping/nestedObjectLoop.html', model), '<p>a: 4</p><p>b: 5</p><p>c: 6</p>')
     done()
   })
 
-  it.only('should parse nested loops correctly (looping/nestedLoopsObjectWithArrayOfObjects.html)', function (done) {
+  it('should parse nested loops correctly (looping/nestedLoopsObjectWithArrayOfObjects.html)', function (done) {
     assert.equalIgnoreSpaces(teddy.render('looping/nestedLoopsObjectWithArrayOfObjects.html', model), '<p>value1</p><p>value2</p><p>value3</p><p>value4</p>')
     done()
   })
 
-  it.only('should render {variables} defined as {varname.{othervar}} (looping/varNameViaVarInLoop.html)', function (done) {
+  it('should render {variables} defined as {varname.{othervar}} (looping/varNameViaVarInLoop.html)', function (done) {
     assert.equalIgnoreSpaces(teddy.render('looping/varNameViaVarInLoop.html', model), '<p>guy</p><p>girl</p><p>landscape</p>')
     done()
   })
 
-  it.only('should render {variables} defined as {varname.{othervar}} under slightly different conditions (looping/varNameViaVarInLoopWithIndependentVars.html)', function (done) {
+  it('should render {variables} defined as {varname.{othervar}} under slightly different conditions (looping/varNameViaVarInLoopWithIndependentVars.html)', function (done) {
     assert.equalIgnoreSpaces(teddy.render('looping/varNameViaVarInLoopWithIndependentVars.html', model), '<p>guy</p><p>girl</p><p>landscape</p>')
     done()
   })
 
-  it.only('should render {variables} in loop that repeats twice (looping/varNameViaVarInLoopWithIndependentVarsDoubled.html)', function (done) {
+  it('should render {variables} in loop that repeats twice (looping/varNameViaVarInLoopWithIndependentVarsDoubled.html)', function (done) {
     assert.equalIgnoreSpaces(teddy.render('looping/varNameViaVarInLoopWithIndependentVarsDoubled.html', model), '<p>guy</p><p>girl</p><p>landscape</p><p>guy</p><p>girl</p><p>landscape</p>')
     done()
   })
 
-  it.only('should render {variables} in loop that repeats twice (looping/varNameViaVarInLoopWithIndependentVarsViaArray.html)', function (done) {
+  it('should render {variables} in loop that repeats twice (looping/varNameViaVarInLoopWithIndependentVarsViaArray.html)', function (done) {
     assert.equalIgnoreSpaces(teddy.render('looping/varNameViaVarInLoopWithIndependentVarsViaArray.html', model), '<p>guy</p><p>girl</p><p>landscape</p>')
     done()
   })
 
-  it.only('should render {variables} in loop that repeats twice (looping/varNameViaVarInLoopWithIndependentVarsViaArrayTwice.html)', function (done) {
+  it('should render {variables} in loop that repeats twice (looping/varNameViaVarInLoopWithIndependentVarsViaArrayTwice.html)', function (done) {
     assert.equalIgnoreSpaces(teddy.render('looping/varNameViaVarInLoopWithIndependentVarsViaArrayTwice.html', model), '<p>guy</p><p>girl</p><p>landscape</p><p>man</p><p>woman</p><p>scenary</p>')
     done()
   })

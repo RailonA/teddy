@@ -3,9 +3,8 @@ const { tagLengths, primaryTags } = require('./constants')
 const { scanTemplate } = require('./scanTemplate')
 let counter = 0
 
-
 // Parse looping teddy tags (i.e <loop through='list' val='item'>)
-function parseLoop(charList, model, passes, endParse, fs, contextModels, currentContext) {
+function parseLoop (charList, model, passes, endParse, fs, contextModels, currentContext) {
   let nested = 0 // Nested counter
   const params = {} // Save all loop parameters in this object
   const modifiedModel = Object.assign({}, model) // Used when we need to scan inner loop contents
@@ -37,9 +36,6 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
   let objArr
   let objMain
   let teddyNameArr
-  let objNameList = []
-  let cAdd
-
 
   // Read <loop> inner contents
   for (i = l - tagLengths.loop; i >= 0; i--) {
@@ -109,11 +105,8 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
 
     // <loop through='list' key='index' val='value'>
     if (periodIndex < 0) { // Loop through value is not an object
-
       if (model[params.through]) { // Loop through non-object value requires context
         through = model[params.through]
-
-
       } else { // Loop through non-object value does not require context
         const contextResult = findContext(params.through, { contextModels, currentContext })
         context = contextResult.context
@@ -137,63 +130,13 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
       keyVals = Object.keys(through)
       vals = Object.values(through)
     }
-
   }
 
-  console.log("***********************************")
-  console.log("***************** LOOP ******************")
-  console.log("***********************************")
-
-  // console.log(through)
-  // console.log(keyVals)
-  // console.log(vals)
-  // console.log(through)
-  // console.log(through)
-  // console.log(through)
-
-  // counter = 0
-
-  // for (let row of contextModels) {
-  //   for (let item of row) {
-
-  //     // console.log(item)
-  //     if (item.includes('[')) {
-  //       if (objNameList.includes(item)) {
-  //         // Do NOthing
-  //       } else {
-  //         objNameList.push(item)
-  //       }
-  //     }
-  //   }
-
-  // }
-
-  let onlLength = objNameList.length
-
-
-  // if (onlLength) {
-  //   for (let onlRowIndex = 0; onlRowIndex < onlLength; onlRowIndex++) {
-  //     console.log("*** onlRowIndex")
-  //     console.log(onlRowIndex)
-  //     // console.log("*** model[params.through][onlRowIndex]")
-  //     // console.log(model[params.through][onlRowIndex])
-  //     // if(model[params.through][onlRowIndex] !== undefined){
-  //     //   console.log("TESTING")
-  //     // } else {
-  //     //   // do nothing
-  //     // }
-
-
-  //   }
-  // }
-
-  // counter = 0
-  // //   // If we have values to loop through, continue
+  // If we have values to loop through, continue
   if (vals) {
     vl = vals.length
 
     for (i = 0; i < vl; i++) { // Loop through every value in list
-
       for (j = slicedTemplate.length - 1; j >= 0; j--) { // Loop through every character inbetween <loop> tags
         currentChar = slicedTemplate[j]
         if (readingVar) { // Reading a variable in template
@@ -224,7 +167,6 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
               }
             }
 
-
             // Replace teddy variable name with actual value
             if (teddyString !== '' && teddyString !== 'undefined') {
               if (teddyString === ' ') {
@@ -237,7 +179,6 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
                 j += (teddyName.length - teddyString.length)
               }
             } if (teddyString === '') {
-
               teddyStrSplit = teddyName.split('.')
               objStr01 = teddyStrSplit[0]
               objArr = []
@@ -249,16 +190,10 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
                   objArr.push(id)
                 }
               }
-              // console.log("*** objNameList")
-              // console.log(objNameList)
-              // console.log("*** objNameList.length")
-              // console.log(objNameList.length)
 
               if (vals[i].length === undefined) {
                 // Do nothing
               } else {
-
-                // console.log(model)
                 if (objStr01 === params.through) {
                   const objSec = objArr[0]
                   if (objArr[1].includes('[')) {
@@ -288,61 +223,34 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
                     j += (teddyName.length - teddyString.length)
                   }
                 } else if (objStr01 === objArr[0]) {
-
                   if (objArr[1].includes('[')) {
                     const objMainGrouping = objArr[1].split('[', 2)
                     objMain = objMainGrouping[0]
                   }
 
-                  // If TeddyNameArr includes value of val[i] do nothing
-                  // Else push value of val[i] into TeddyNameArr
-                  // And set teddyString to equal val[i] and insert value to slicedTemplate
                   if (typeof model[objMain][0] === 'object') {
-
-                    console.log("******************************")
-                    console.log("*** BEFOUR COUNTER")
-                    console.log(counter)
-
                     if (vals[i] !== vals[vals.length - 1]) {
-
-                      // console.log(vals[i])
-                      // console.log(vals[vals.length - 1])
-                      // console.log("*** WHAT IT IS")
-                      // console.log( model[objMain][counter][vals[i]])
-                      // console.log("*** SHOULD BE")
-                      // console.log( model[objMain][0][vals[i]])
-                      // console.log( model[objMain][1][vals[i]])
-                      // console.log()
                       if (counter > 0) {
-                        console.log(counter - 1)
                         teddyNameArr.push(vals[i])
                         teddyString = model[objMain][counter - 1][vals[i]]
                         slicedTemplate = insertValue(slicedTemplate, teddyString.split('').reverse().join(''), sov, j)
                       } else {
-
                         teddyNameArr.push(vals[i])
                         teddyString = model[objMain][counter][vals[i]]
                         slicedTemplate = insertValue(slicedTemplate, teddyString.split('').reverse().join(''), sov, j)
                       }
                     } else if (vals[i] === vals[vals.length - 1]) {
-                      // console.log(vals[i])
-                      // console.log(vals[vals.length - 1])
-
                       if (counter > 0) {
-                        console.log(counter - 1)
                         teddyNameArr.push(vals[i])
                         teddyString = model[objMain][counter - 1][vals[i]]
                         slicedTemplate = insertValue(slicedTemplate, teddyString.split('').reverse().join(''), sov, j)
                       } else {
-
                         teddyNameArr.push(vals[i])
                         teddyString = model[objMain][counter][vals[i]]
                         slicedTemplate = insertValue(slicedTemplate, teddyString.split('').reverse().join(''), sov, j)
                       }
                       counter++
                     }
-
-
 
                     const index = slicedTemplate.indexOf('}')
 
@@ -353,11 +261,6 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
                     if (teddyString.length < teddyName.length) {
                       j += (teddyName.length - teddyString.length)
                     }
-
-                    // console.log("*** slicedTemplate")
-                    // console.log(slicedTemplate)
-
-
                   } else {
                     if (teddyNameArr.includes(vals[i])) {
                       // Do nothing
@@ -378,9 +281,7 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
                       j += (teddyName.length - teddyString.length)
                     }
                   }
-
                 }
-
               }
             }
 
@@ -391,8 +292,6 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
           } else {
             teddyName += currentChar
           }
-
-
         } else if (currentChar === '{') { // We reached a possible teddy var or comment inside of <loop>
           if (slicedTemplate[j - 1] === '!') { // Its a comment
             containsComment = true
@@ -401,10 +300,7 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
             readingVar = true
           }
         }
-
       }
-
-
 
       // Join parsed templates together
       if (containsTag) { // If loop contents contain a teddy tag, parse template again until no extra teddy tags remain
@@ -432,15 +328,11 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
         }
       }
     }
-
-
   } else {
     // Could not parse <loop>, return rest of template
     const endOfClosingTag = charList.lastIndexOf('>', eol)
     return { template: [...charList.slice(0, endOfClosingTag)], passes, endParse, currentContext, contextModels }
   }
-  console.log("*** slicedTemplate")
-  console.log(slicedTemplate)
 
   // In cases of very large datasets, we use the global endParse var to save time (since it will go character by character)
   if (modifiedStatement.length > 49999 && endOfStatement.length <= 1 && (parsedTags || (!containsTag && !containsComment))) {
@@ -449,11 +341,10 @@ function parseLoop(charList, model, passes, endParse, fs, contextModels, current
 
   // Return template with loop parsed
   return { template: [...endOfStatement, ...modifiedStatement], endParse, passes, currentContext, contextModels }
-
 }
 
 // Finds correct context for a nested loop
-function findContext(str, { contextModels, currentContext }) {
+function findContext (str, { contextModels, currentContext }) {
   for (let i = 0; i < contextModels.length; i++) {
     if (str.indexOf(contextModels[i][0]) > -1) {
       currentContext = contextModels[i] // save required context from list
@@ -465,7 +356,7 @@ function findContext(str, { contextModels, currentContext }) {
 }
 
 // Gets contextual value from model
-function getContext(model, str, thru) {
+function getContext (model, str, thru) {
   let currentValue
   let tempStr = ''
   let tempIndex = ''
